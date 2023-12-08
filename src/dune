@@ -1,3 +1,4 @@
 (executable 
  (name base)
- (library automate))
+ (library lib)
+)
