@@ -26,7 +26,7 @@ let un_ou_rien (pile : regex list) = match pile with
   |[] -> raise (InvalidRegex "? est vide ????")
   |a::t -> Ou(a, Eps)::t
 
-let reconnaitre_regex (str: string) = 
+let str_en_regex (str: string) = 
   let pile = ref [] in
   for i=0 to (String.length str) - 1 do
     match str.[i] with
