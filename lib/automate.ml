@@ -1,10 +1,3 @@
-type automate = {
-  nb_etats : int;
-  initial : int;
-  terminaux : bool array;
-  transitions : int array array (* x: etat || y: lettre *)
-}
-
 let creer_transition x a y aut =
   aut.transitions.(x).(a) <- y;;
 
