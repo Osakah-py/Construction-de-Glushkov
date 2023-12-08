@@ -3,7 +3,7 @@
 (* http://cpge.info                                                 *)
 (*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*)
 
-(* Ã€ modifier : ce que l'on fait pour chaque ligne. En l'Ã©tat, on
+(* Ã modifier : ce que l'on fait pour chaque ligne. En l'état, on
    affiche toujours la ligne. *)
 let process_line line =
   Printf.printf "%s\n%!" line
@@ -18,7 +18,7 @@ let process input =
   with End_of_file -> ()
 
 let main () =
-  (* VÃ©rifie que l'expression rÃ©guliÃ¨re est bien prÃ©sente en premier
+  (* Vérifie que l'expression régulière est bien présente en premier
      argument. Sinon, on affiche un message indiquant comment utiliser
      ce programme et on quitte avec un code d'erreur de `1`. *)
   let argc = Array.length Sys.argv in
@@ -26,8 +26,8 @@ let main () =
     Printf.printf "usage : %s regex [file]\n%!" Sys.argv.(0);
     exit 1
   end;
-  (* S'il y a un deuxiÃ¨me argument c'est qu'il faut lire dans ce
-     fichier, sinon, on utilise l'entrÃ©e standard. *)
+  (* S'il y a un deuxième argument c'est qu'il faut lire dans ce
+     fichier, sinon, on utilise l'entrée standard. *)
   let input =
     if (argc = 3) then begin
       Stdlib.open_in Sys.argv.(2)
