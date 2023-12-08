@@ -20,7 +20,7 @@ let inter (pile : regex list) = match pile with
 
 let kleene (pile : regex list) = match pile with 
   |[] -> raise (InvalidRegex "Kleene tout nu !")
-  |a::t -> Kleene(a)::t
+  |a::t -> Etoile(a)::t
 
 let un_ou_rien (pile : regex list) = match pile with 
   |[] -> raise (InvalidRegex "? est vide ????")
@@ -34,7 +34,8 @@ let reconnaitre_regex (str: string) =
     | '@' -> pile := inter !pile
     | '*' -> pile := kleene !pile
     | '?' -> pile := un_ou_rien !pile
-    
-      
-    end
-  done 
+    |  c  -> pile := Var(Char.code c)::!pile
+  done;
+  match !pile with
+  | [a] -> a
+  | _ -> raise (InvalidRegex "Regex pas complète")
