@@ -6,8 +6,12 @@
       ? : optionel (zéro ou une fois)   
 *)
 
-let union (pile : char list) = match pile with 
-  |
+exception InvalidRegex of string
+
+let union (pile : regex list) = match pile with 
+  |[] -> raise (InvalidRegex "Union vide")
+  |[a] -> raise (InvalidRegex "Union a un seul élément")
+  |a::b::t -> Union(a, b)
 
 
 
