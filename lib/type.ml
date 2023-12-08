@@ -5,6 +5,7 @@ type afd = {
   transitions : int array array (* x: etat || y: lettre *)
 }
 
+
 type afnd = {
   nb_etats : int;
   inital : int list;
@@ -13,9 +14,10 @@ type afnd = {
 }
 
 type regex =
-  | Vide 
   | Eps
-  | Var of char
+  | Var of int (* etiquette pour int *)
   | Ou of regex * regex
   | Et of regex * regex
   | Etoile of regex
+
+type facteur = int * int 
