@@ -8,7 +8,7 @@
 - **Tous**: Implémenter l'entrée et la sortie (À LA FIN)
 
 
-## Syntaxe des regex :
+## Syntaxe des regex
 - . : une lettre quelconque de l’alphabet
 - @ : concaténation
 - | : alternative
