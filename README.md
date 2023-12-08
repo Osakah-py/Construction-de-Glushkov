@@ -1,7 +1,7 @@
 # Construction-de-Glushkov
 
 ## Objectifs
-- **Alex**: Vérifier regex + créer regex (pile) (ordre postfixe) 
+- **Alex**: Vérifier regex + créer regex (pile) (ordre postfixe) ✓ 
 - **Daniel / Anna**: Linéariser le regex (fonction phi + préfixe, suffixe et facteur)
 - **Daniel**: Implémenter l'automate local + enlever les étiquettes
 - **Alex / Anna**: Vérifier si le mot appartient à l'automate (simuler les états en même temps / déterminisation)
