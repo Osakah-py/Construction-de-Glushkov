@@ -1,3 +1,5 @@
+open Lib.Verif_regex
+
 (*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*)
 (* Nicolas PÃ©cheux <info.cpge@cpge.info>                            *)
 (* http://cpge.info                                                 *)
@@ -41,4 +43,4 @@ let main () =
   process input;
   if argc = 3 then Stdlib.close_in input
 
-let () = Printf.printf "ca compile ! \n"; main ()
+let () = Printf.printf "ca compile ! \n" ; ignore (str_en_regex "ab|"); main ()
