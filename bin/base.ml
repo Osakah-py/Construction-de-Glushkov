@@ -41,4 +41,4 @@ let main () =
   process input;
   if argc = 3 then Stdlib.close_in input
 
-let () = main ()
+let () = Printf.printf "ca compile ! \n"; main ()
