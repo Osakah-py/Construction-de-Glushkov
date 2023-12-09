@@ -1,5 +1,19 @@
 # Construction-de-Glushkov
 
+## Setup le projet en local
+
+Pour obtenir le projet en local :
+```bash
+git clone https://github.com/Osakah-py/-Construction-de-Glushkov.git
+```
+Pour installer les bonnes dépendances :
+```bash
+opam install . --deps-only
+```
+Pour compiler : 
+```bash
+dune build
+```
 ## Objectifs
 - **Alex**: Vérifier regex + créer regex (pile) (ordre postfixe) ✓ 
 - **Daniel / Anna**: Linéariser le regex (fonction phi + préfixe, suffixe et facteur)
