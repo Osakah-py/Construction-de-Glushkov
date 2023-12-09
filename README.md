@@ -31,9 +31,13 @@ sur windows c'est plutot ```opam switch create glushkov 4.14.0+mingw64```
 ```bash
 opam install . --deps-only
 ```
-4. **Compiler :**
+4. **Compiler & éxecuter :**
 ```bash
 dune build
+```
+Et ensuite pour essayer le projet : 
+```bash
+dune exec glushkov
 ```
 4. **Désactiver la sandbox :**
    Lorsque vous avez terminé de travailler sur votre projet dans la sandbox, vous pouvez désactiver celle-ci pour revenir à l'environnement global :
