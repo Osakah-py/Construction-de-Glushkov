@@ -1,3 +1,5 @@
+open Type
+
 (* Syntaxe des regex :
       . : une lettre quelconque de l’alphabet
       @ : concaténation
@@ -10,12 +12,12 @@ exception InvalidRegex of string
 
 let union (pile : regex list) = match pile with 
   |[] -> raise (InvalidRegex "Union vide")
-  |[a] -> raise (InvalidRegex "Union a un seul élément")
+  |[_] -> raise (InvalidRegex "Union a un seul élément")
   |a::b::t -> Ou(a, b)::t
 
 let inter (pile : regex list) = match pile with 
   |[] -> raise (InvalidRegex "Intersection vide")
-  |[a] -> raise (InvalidRegex "Intersection a un seul élément")
+  |[_] -> raise (InvalidRegex "Intersection a un seul élément")
   |a::b::t -> Et(a, b)::t
 
 let kleene (pile : regex list) = match pile with 
