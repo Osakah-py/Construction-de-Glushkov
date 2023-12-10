@@ -5,6 +5,10 @@ open Lib.Verif_regex
 (* http://cpge.info                                                 *)
 (*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*)
 
+(* ANSI ESCAPE *)
+let red_text s = "\027[31m" ^ s ^ "\027[0m";;
+let green_text s = "\027[32m" ^ s ^ "\027[0m";;
+
 (* Ã modifier : ce que l'on fait pour chaque ligne. En l'état, on
    affiche toujours la ligne. *)
 let process_line line =
@@ -12,10 +16,13 @@ let process_line line =
 
 (* Lecture de l'entrÃ©e, ligne par ligne *)
 let process input =
+  let i = ref 0 in
   try
     while true do
       let line = Stdlib.input_line input in
-      process_line line
+      Printf.printf "%s %s :" (red_text "Line ") (red_text (string_of_int !i)); 
+      process_line line;
+      i := !i + 1;
     done
   with End_of_file -> ()
 
@@ -39,7 +46,7 @@ let main () =
   Printf.printf
     "* Regexp you entered is '%s'\n* Reading from %s\n\n%!"
     Sys.argv.(1)
-    (if argc = 3 then Sys.argv.(2) else "stdin");
+    (green_text (if argc = 3 then Sys.argv.(2) else "stdin"));
   process input;
   if argc = 3 then Stdlib.close_in input
 
