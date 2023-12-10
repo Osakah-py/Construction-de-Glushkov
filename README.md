@@ -39,6 +39,8 @@ Et ensuite pour essayer le projet :
 ```bash
 dune exec glushkov
 ```
+**Attention :** pour utiliser avec des arguments le projet il faut taper : ```dune exec -- glushkov [regex] [file]```
+
 4. **Désactiver la sandbox :**
    Lorsque vous avez terminé de travailler sur votre projet dans la sandbox, vous pouvez désactiver celle-ci pour revenir à l'environnement global :
    ```bash
