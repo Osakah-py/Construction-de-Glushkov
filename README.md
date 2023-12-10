@@ -4,7 +4,7 @@
 
 Pour obtenir le projet en local :
 ```bash
-git clone https://github.com/Osakah-py/-Construction-de-Glushkov.git
+git clone https://github.com/Osakah-py/Construction-de-Glushkov.git
 ```
 ```diff
 - Vous êtes pas obligé de faire une sandboxe, et vous pouvez directement passer à la partie 3.
