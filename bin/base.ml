@@ -35,19 +35,36 @@ let main () =
     Printf.printf "usage : %s regex [file]\n%!" Sys.argv.(0);
     exit 1
   end;
-  (* S'il y a un deuxième argument c'est qu'il faut lire dans ce
-     fichier, sinon, on utilise l'entrée standard. *)
-  let input =
-    if (argc = 3) then begin
-      Stdlib.open_in Sys.argv.(2)
-    end else
-      Stdlib.stdin
+(* S'il y a un deuxième argument c'est qu'il faut lire dans ce
+   fichier, sinon, on utilise l'entrée standard. *)
+   let input =
+    if argc = 3 then
+      begin
+        if Sys.is_directory Sys.argv.(2) then
+          Sys.readdir Sys.argv.(2)
+        else
+          [| Sys.argv.(2) |]
+      end
+    else
+      [||]
   in
-  Printf.printf
-    "* Regexp you entered is '%s'\n* Reading from %s\n\n%!"
+  
+  Printf.printf "* Regexp you entered is '%s'\n* Reading from %s\n\n%!"
     Sys.argv.(1)
     (green_text (if argc = 3 then Sys.argv.(2) else "stdin"));
-  process input;
-  if argc = 3 then Stdlib.close_in input
+  
+  if argc = 3 then
+    begin
+      for i = 0 to (Array.length input) - 1 do
+        let path = Lib.Os.path_join Sys.argv.(2)  input.(i) in
+        let current_process = Stdlib.open_in path in
+        Printf.printf "\n Reading %s \n" (green_text path);
+        process current_process;
+        Stdlib.close_in current_process;
+      done
+    end
+  else
+    process Stdlib.stdin
+  
 
 let () = Printf.printf "ca compile ! \n" ; ignore (str_en_regex "ab|"); main ()
