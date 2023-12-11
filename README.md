@@ -50,9 +50,9 @@ dune exec glushkov
    Cela rétablit l'environnement global OPAM.
 
 ## Objectifs
-- **Alex**: Vérifier regex + créer regex (pile) (ordre postfixe) ✓ 
-- **Daniel / Anna**: Linéariser le regex (fonction phi + préfixe, suffixe et facteur)
-- **Daniel**: Implémenter l'automate local + enlever les étiquettes
+- **Alex**: Vérifier regex + créer regex (pile) (ordre postfixe)  
+- **Daniel / Anna**: Linéariser le regex (fonction phi + préfixe, suffixe et facteur + enlever les étiquettes de l'automate local)
+- **Daniel**: Implémenter l'automate local ✓
 - **Alex / Anna**: Vérifier si le mot appartient à l'automate (simuler les états en même temps / déterminisation)
 - **Tous**: Implémenter l'entrée et la sortie (À LA FIN)
 
