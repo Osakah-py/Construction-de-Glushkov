@@ -1,8 +1,8 @@
-type afd = {
+type afd_local = {
   nb_etats : int;
   initial : int;
   terminaux : bool array;
-  transitions : int array array (* x: etat || y: lettre *)
+  transitions : bool array array (* x: etat || y: etat *)
 }
 
 
