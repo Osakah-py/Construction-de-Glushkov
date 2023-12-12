@@ -10,5 +10,5 @@ open Type;;
 (**********************)
 
 let str_in_anfd (str: string) (automate : afnd) =
-  if automate.transition.(automate.initial).(Char.code (str.[1])) = [] then 
+  if automate.transition_nd.(automate.initial).(Char.code (str.[1])) = [] then 
     Printf.printf "Vide"
