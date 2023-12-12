@@ -1,16 +1,16 @@
-type afd_local = {
+type afnd = {
+  nb_etats : int;
+  inital : int; (* automate standard *)
+  terminaux : bool array;
+  transition : (int * int) list array; (* (a, y) *)
+  }
+
+(* pour anna (determinisme d'un automate) *)
+type afd = {
   nb_etats : int;
   initial : int;
   terminaux : bool array;
-  transitions : bool array array (* x: etat || y: etat *)
-}
-
-
-type afnd = {
-  nb_etats : int;
-  inital : int list;
-  terminaux : bool array;
-  transition : (int * char * int) list array;
+  transitions : int array array (* x: etat || y: alphabet *)
 }
 
 type regex =

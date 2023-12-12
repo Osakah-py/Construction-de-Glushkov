@@ -8,7 +8,7 @@ git clone https://github.com/Osakah-py/Construction-de-Glushkov.git
 ```
 > [!NOTE]\
 > Vous êtes pas obligé de faire une sandboxe, et vous pouvez directement passer à la partie 3.
-```
+
 OPAM offre une fonctionnalité appelée **sandboxes** qui peut être utilisée pour isoler les dépendances de vos projets OCaml.
 Voici comment créer et utiliser une sandbox avec OPAM :
 
@@ -19,7 +19,7 @@ Voici comment créer et utiliser une sandbox avec OPAM :
 > [!WARNING]\
 > sur windows c'est plutot ```opam switch create glushkov 4.14.0+mingw64```
 
-> [!CAUTION]\
+> [!WARNING]\
 >la 4.14.0 est la version qu'on utilise mais il se peut que une erreur soit retourné comme quoi elle est pas disponible, essayer alors de mettre a jour opam ```opam update``` 
 
 

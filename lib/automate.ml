@@ -12,9 +12,9 @@ let creer_terminaux
 let creer_transitions
   (n: int) (pref: int list) (fact: facteur list) =
   (* n <- epsilon *)
-  let res = Array.make_matrix (n + 1) (n + 1) false in
+  let res = Array.make (n + 1) [] in
   List.iter
-    (fun x -> res.(n).(x) <- true)
+    (fun x -> res.(n) <- (x, x))
     pref;
   List.iter 
     (fun (x, y) -> res.(x).(y) <- true)
