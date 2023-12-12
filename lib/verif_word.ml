@@ -15,5 +15,5 @@ let str_in_anfd (str: string) (automate : afnd) =
     if curr_char = lgt then
        automate.terminaux.(curr_state)
     else
-      List.iter (aux (curr_char+1)) (automate.transition.(automate.initial).(Char.code (str.[curr_char])))
+      List.iter (aux (curr_char+1)) (automate.transition_nd.(automate.initial).(Char.code (str.[curr_char])))
   in aux 0 automate.initial
