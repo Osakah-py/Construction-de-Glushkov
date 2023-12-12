@@ -1,11 +1,11 @@
 type afnd = {
   nb_etats : int;
-  inital : int; (* automate standard *)
+  initial : int; (* automate standard *)
   terminaux : bool array;
-  transition : (int * int) list array; (* (a, y) *)
+  transition : int list array array; (* (a, y) *)
   }
 
-(* pour anna (determinisme d'un automate) *)
+(* pour Anna (determinisme d'un automate) *)
 type afd = {
   nb_etats : int;
   initial : int;

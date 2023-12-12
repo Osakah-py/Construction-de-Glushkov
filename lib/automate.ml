@@ -29,4 +29,3 @@ let creer_automate_local
     terminaux = creer_terminaux n suff;
     transitions = creer_transitions n pref fact
   };;
-
