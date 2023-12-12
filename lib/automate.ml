@@ -28,9 +28,5 @@ let creer_automate_local
     nb_etats = n + 1; (* epsilon en plus *)
     initial = n; (* epsilon *)
     terminaux = creer_terminaux n suff;
-<<<<<<< HEAD
-    transitions = creer_transitions n pref fact
-=======
     transition_nd = creer_transitions n pref fact dict
->>>>>>> e403ba4 (automate implemented)
   };;
