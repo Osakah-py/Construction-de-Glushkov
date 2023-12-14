@@ -1,11 +1,12 @@
 open Type;; 
 
 let creer_terminaux 
-  (n: int) (suff: int list) =
+  (n: int) (a_eps: bool) (suff: int list) =
   let res = Array.make n false in
   List.iter 
     (fun x -> res.(x) <- true)
     suff;
+  res.(n - 1) <- a_eps; 
   res;;
 
 (* creer la matrice de transition pour l'automate local *)
@@ -23,10 +24,10 @@ let creer_transitions
 
 let creer_automate_local 
   (* dict a pour clé l'étiquette *)
-  (n: int) (pref: int list) (suff: int list) (fact: facteur list) (dict: int array) = 
+  (n: int) (a_eps: bool) (pref: int list) (suff: int list) (fact: facteur list) (dict: int array) = 
   {
     nb_etats = n + 1; (* epsilon en plus *)
     initial = n; (* epsilon *)
-    terminaux = creer_terminaux n suff;
+    terminaux = creer_terminaux (n + 1) a_eps suff;
     transition_nd = creer_transitions n pref fact dict
   };;
