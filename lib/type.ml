@@ -20,4 +20,4 @@ type regex =
   | Et of regex * regex
   | Etoile of regex
 
-type facteur = int * int 
+type facteur = int * int ;;

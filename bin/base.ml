@@ -1,5 +1,5 @@
 open Lib.Verif_regex
-
+open Lib.Verif_word
 (*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*)
 (* Nicolas PÃ©cheux <info.cpge@cpge.info>                            *)
 (* http://cpge.info                                                 *)
@@ -11,8 +11,11 @@ let green_text s = "\027[32m" ^ s ^ "\027[0m";;
 
 (* Ã modifier : ce que l'on fait pour chaque ligne. En l'état, on
    affiche toujours la ligne. *)
-let process_line line =
-  Printf.printf "%s\n%!" line
+let process_line line nb =
+  if str_in_anfd line afnd_test_wikipedia then begin
+    Printf.printf "%s %s :" (red_text "Line ") (red_text (string_of_int nb)); 
+    Printf.printf "%s\n%!" line
+  end
 
 (* Lecture de l'entrÃ©e, ligne par ligne *)
 let process input =
@@ -20,8 +23,7 @@ let process input =
   try
     while true do
       let line = Stdlib.input_line input in
-      Printf.printf "%s %s :" (red_text "Line ") (red_text (string_of_int !i)); 
-      process_line line;
+      process_line line !i;
       i := !i + 1;
     done
   with End_of_file -> ()
@@ -37,16 +39,16 @@ let main () =
   end;
 (* S'il y a un deuxième argument c'est qu'il faut lire dans ce
    fichier, sinon, on utilise l'entrée standard. *)
-   let input =
+   let input, folder =
     if argc = 3 then
       begin
         if Sys.is_directory Sys.argv.(2) then
-          Sys.readdir Sys.argv.(2)
+          Sys.readdir Sys.argv.(2), Sys.argv.(2)
         else
-          [| Sys.argv.(2) |]
+          [| Sys.argv.(2) |], "."
       end
     else
-      [||]
+      [||], "."
   in
   
   Printf.printf "* Regexp you entered is '%s'\n* Reading from %s\n\n%!"
@@ -56,7 +58,7 @@ let main () =
   if argc = 3 then
     begin
       for i = 0 to (Array.length input) - 1 do
-        let path = Lib.Os.path_join Sys.argv.(2)  input.(i) in
+        let path = Lib.Os.path_join folder  input.(i) in
         let current_process = Stdlib.open_in path in
         Printf.printf "\n Reading %s \n" (green_text path);
         process current_process;
