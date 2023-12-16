@@ -54,17 +54,41 @@ dune exec glushkov
 
    Cela rétablit l'environnement global OPAM.
 
+## ✨ Spécial pour Anna ✨
+Une fois le projets en local voici comment l'envoyer vers le répértoire git 
+1. **Verifier les modifs des autres**
+Pour éviter les conflits on peut commencer par récuper les modifications des autres pour cela taper dans le terminal :
+```bash
+git pull origin
+```
+> [!NOTE]
+> En soit cette étape est pas obligatoire mais c'est une mesure de sécurité, si jamais t'as un conflit dit le nous :p
+
+2. **Ajouter les modifs**
+D'abord on choisi les fichiers a envoyer (```.``` pour indiquer tout ceux du répertoire)
+```bash
+git add .
+```
+Puis on explique ce qu'on a fait
+```bash
+git commit -m "mes super modifs !"
+```
+
+3. **On envoit les modifs a Github**
+```bash
+git push origin
+```
 ## Objectifs
 - **Alex**: Vérifier regex + créer regex (pile) (ordre postfixe)  ✓
 - **Daniel / Anna**: Linéariser le regex (fonction phi + préfixe, suffixe et facteur + enlever les étiquettes de l'automate local)
 - **Daniel**: Implémenter l'automate local ✓
-- **Alex / Anna**: Vérifier si le mot appartient à l'automate (simuler les états en même temps / déterminisation)
+- **Alex / Anna**: Vérifier si le mot appartient à l'automate (simuler les états en même temps ✓ / déterminisation)
 - **Tous**: Implémenter l'entrée et la sortie (À LA FIN)
 
 
 ## Syntaxe des regex
-- . : une lettre quelconque de l’alphabet
-- @ : concaténation
-- | : alternative
-- \* : étoile de Kleene (zéro, une ou plusieurs fois)
-- ? : optionel (zéro ou une fois) 
+- ```.``` : une lettre quelconque de l’alphabet
+- ```@``` : concaténation
+- ```|``` : alternative
+- ```*``` : étoile de Kleene (zéro, une ou plusieurs fois)
+- ```?``` : optionel (zéro ou une fois) 
