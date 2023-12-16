@@ -9,10 +9,13 @@ open Lib.Verif_word
 let red_text s = "\027[31m" ^ s ^ "\027[0m";;
 let green_text s = "\027[32m" ^ s ^ "\027[0m";;
 
+(* GLOBAL VAR *)
+let compiled = ref false;;
+
 (* Ã modifier : ce que l'on fait pour chaque ligne. En l'état, on
    affiche toujours la ligne. *)
 let process_line line nb =
-  if str_in_anfd line afnd_test_wikipedia then begin
+  if str_dans_anfd line afnd_test_wikipedia !compiled then begin
     Printf.printf "%s %s :" (red_text "Line ") (red_text (string_of_int nb)); 
     Printf.printf "%s\n%!" line
   end
@@ -43,8 +46,9 @@ let main () =
     Printf.printf "usage : %s regex [file]\n%!" Sys.argv.(0);
     exit 1
   end;
-  let reg_arg, file_arg, compiled, recursive = Lib.Os.process_args argc Sys.argv in
-  if compiled && recursive then Printf.printf "Compiled and recurs";
+  let reg_arg, file_arg, comp, recursive = Lib.Os.process_args argc Sys.argv in
+  if comp then compiled := true;
+  if recursive then Printf.printf "Compiled and recurs";
   (* S'il y a un deuxième argument c'est qu'il faut lire dans ce
    fichier, sinon, on utilise l'entrée standard. *)
    let input, folder =

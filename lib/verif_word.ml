@@ -5,7 +5,8 @@
 
 open Type;;
 
-
+(* Automate de test *)
+(**********************)
 (* Denote l'expression reguliere ( a(ab)* )* || (ba)*     *)
 let afnd_test_wikipedia = {
   nb_etats = 6;
@@ -14,10 +15,15 @@ let afnd_test_wikipedia = {
   transition_nd = [| [(Char.code 'a', 1); (Char.code 'b', 4)]; [(Char.code 'a', 1); (Char.code 'a', 2)]; [(Char.code 'b', 3)]; [(Char.code 'a', 1); (Char.code 'a', 2)]; [(Char.code 'a', 5)];[(Char.code 'b', 4)]|]
 }
 
+let emptyafnd = {
+  nb_etats = 0;
+  initial = 0;
+  terminaux = [||];
+  transition_d = [||]
+}
 (* Parcours en Direct *)
 (**********************)
-
-let str_in_anfd (str: string) (automate : afnd) =
+let parcours_direct (str: string) (automate : afnd) =
   let lgt = (String.length str) in
   let rec changement_etat (i:int) (curr_state:int) =
     if i = lgt then
@@ -32,4 +38,18 @@ let str_in_anfd (str: string) (automate : afnd) =
                         (parcours_vosins i q)
   in changement_etat 0 automate.initial
 
-  (*List.iter (aux (curr_char+1)) (automate.transition_nd.(automate.initial).(Char.code (str.[curr_char])))*)
+(* Deterministation *)
+(**********************)
+let parcours_determinise (str: string) (automate:afd) = 
+  if str.[0] = 'a'&& automate.initial = 0 then print_newline();   (* j'ai mis des random condition pour que ca puisse compiler*)
+  Printf.printf "Soon \n"; true
+
+  (*let determinisation (str: string) (automate_nd :afnd) = 
+    Printf.printf "Soon"*)
+
+
+(* GENERAL *)
+(**********************)
+let str_dans_anfd (str: string) (automate : afnd) (compiled : bool) =
+  if not compiled then parcours_direct str automate
+  else parcours_determinise str emptyafnd
