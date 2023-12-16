@@ -6,6 +6,9 @@ Pour obtenir le projet en local :
 ```bash
 git clone https://github.com/Osakah-py/Construction-de-Glushkov.git
 ```
+> [!TIP]\
+> Version ultra rapide : àllez a la racine du fichier et taper ```source setup.sh```, cela va effectuer les commandes si dessous tout seul.
+
 > [!NOTE]\
 > Vous êtes pas obligé de faire une sandboxe, et vous pouvez directement passer à la partie 3.
 
