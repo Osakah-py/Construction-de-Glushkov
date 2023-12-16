@@ -41,8 +41,8 @@ let parcours_direct (str: string) (automate : afnd) =
 (* Deterministation *)
 (**********************)
 let parcours_determinise (str: string) (automate:afd) = 
-  if str.[0] = 'a'&& automate.initial = 0 then print_newline();   (* j'ai mis des random condition pour que ca puisse compiler*)
-  Printf.printf "Soon \n"; true
+  if String.length str = 1 && automate.initial = 0 then print_newline();   (* j'ai mis des random condition pour que ca puisse compiler*)
+ true
 
   (*let determinisation (str: string) (automate_nd :afnd) = 
     Printf.printf "Soon"*)

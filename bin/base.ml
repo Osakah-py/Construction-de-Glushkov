@@ -21,21 +21,30 @@ let process_line line nb =
   end
 
 (* Lecture de l'entrÃ©e, ligne par ligne *)
-let process input =
+let process_file input =
   let i = ref 0 in
   try
     while true do
       let line = Stdlib.input_line input in
       process_line line !i;
       i := !i + 1;
-    done
+    done; 
   with End_of_file -> ()
 
-let process_file path = 
-  let current_process = Stdlib.open_in path in
+
+let rec process_folder input folder recursiv =  
+for i = 0 to (Array.length input) - 1 do
+  let path = Lib.Os.path_join folder  input.(i) in
   Printf.printf "\n Reading %s \n" (green_text path);
-  process current_process;
-  Stdlib.close_in current_process
+  if Sys.is_directory path then
+    if recursiv then process_folder (Sys.readdir path) path recursiv
+    else Printf.printf "C'est un dossier pour le lire aussi ajouter l'option -r\n"
+  else begin 
+        let current_process = Stdlib.open_in path in
+        process_file current_process;
+        Stdlib.close_in current_process
+        end
+done
 
 let main () =
   (* Vérifie que l'expression régulière est bien présente en premier
@@ -64,14 +73,9 @@ let main () =
     reg_arg
     (green_text file_arg);
   
-  if file_arg = "___stdin___" then process Stdlib.stdin
+  if file_arg = "___stdin___" then process_file Stdlib.stdin
   else
-    begin
-      for i = 0 to (Array.length input) - 1 do
-        let path = Lib.Os.path_join folder  input.(i) in
-        process_file path
-      done
-    end
+    process_folder input folder recursive
   
 
 let () = Printf.printf "ca compile ! \n" ; ignore (str_en_regex "ab|"); main ()
