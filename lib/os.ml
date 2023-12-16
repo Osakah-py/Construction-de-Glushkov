@@ -12,22 +12,26 @@ let path_join base_path sub_path =
     base_path ^ (String.make 1 path_separator) ^ sub_path
 ;;
 
-(* Verifie si il y a des arguments -rc  et renvoie le nom du fichier, compilé?, recursif? *)
+(* Verifie si il y a des arguments -rc  et renvoie regex, nom du fichier, compilé?, recursif? *)
 
-let process_args argc =   
+let process_args argc argv =
   if argc = 3 then 
-    Sys.argv.(2), false, false
-  else   
-  if Sys.argv.(2).[0] = '-' then
-    let compiled = ref false and recursive = ref false in
-    for i=0 to String.length Sys.argv.(2) do
-      match Sys.argv.(2).[i] with
-      | 'c' -> compiled := true
-      | 'r' -> recursive := true
-      | a -> Printf.printf "argument %c non reconnu et donc ignoré \n" a
-    done;
-    if argc = 3 then
-    Sys.argv.(3), !compiled, !recursive
-    else  "stdin", !compiled, !recursive
+    argv.(1), argv.(2), false, false
   else 
-    exit 1;;
+    begin
+      if argv.(1).[0] = '-' then
+        let compiled = ref false and recursive = ref false in
+        for i = 1 to (String.length argv.(1)) - 1 do
+          match argv.(1).[i] with
+          | 'c' -> compiled := true
+          | 'r' -> recursive := true
+          | a -> Printf.printf "argument %c non reconnu et donc ignoré \n" a
+        done;
+        if argc = 4 then (
+          Printf.printf "razraz args \n";
+        argv.(2), argv.(3), !compiled, !recursive)
+        else  (Printf.printf "%d euh args \n" argc;
+          argv.(2), "___stdin___", !compiled, !recursive)
+      else 
+        exit 1
+    end

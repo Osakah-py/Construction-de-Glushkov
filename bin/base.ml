@@ -43,35 +43,31 @@ let main () =
     Printf.printf "usage : %s regex [file]\n%!" Sys.argv.(0);
     exit 1
   end;
-  let file_arg, compiled, recursive = Lib.Os.process_args argc in
+  let reg_arg, file_arg, compiled, recursive = Lib.Os.process_args argc Sys.argv in
   if compiled && recursive then Printf.printf "Compiled and recurs";
   (* S'il y a un deuxième argument c'est qu'il faut lire dans ce
    fichier, sinon, on utilise l'entrée standard. *)
    let input, folder =
-    if argc = 3 then
-      begin
-        if Sys.is_directory file_arg then
-          Sys.readdir file_arg, file_arg
+        if file_arg = "___stdin___" then
+          [||], "."
+        else if Sys.is_directory file_arg then
+            Sys.readdir file_arg, file_arg
         else
           [| file_arg |], "."
-      end
-    else
-      [||], "."
   in
   
   Printf.printf "* Regexp you entered is '%s'\n* Reading from %s\n\n%!"
-    Sys.argv.(1)
-    (green_text (if argc = 3 then Sys.argv.(2) else "stdin"));
+    reg_arg
+    (green_text file_arg);
   
-  if argc = 3 then
+  if file_arg = "___stdin___" then process Stdlib.stdin
+  else
     begin
       for i = 0 to (Array.length input) - 1 do
         let path = Lib.Os.path_join folder  input.(i) in
         process_file path
       done
     end
-  else
-    process Stdlib.stdin
   
 
 let () = Printf.printf "ca compile ! \n" ; ignore (str_en_regex "ab|"); main ()
