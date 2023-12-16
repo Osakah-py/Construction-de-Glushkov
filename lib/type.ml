@@ -2,7 +2,7 @@ type afnd = {
   nb_etats : int;
   initial : int; (* automate standard *)
   terminaux : bool array;
-  transition_nd : (int * int) list array; (* (a, y) *)
+  transition_nd : (int * int) list array; (* (lettre, état) *)
   }
 
 (* pour Anna (determinisme d'un automate) *)
