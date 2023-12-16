@@ -28,24 +28,32 @@ let process input =
     done
   with End_of_file -> ()
 
+let process_file path = 
+  let current_process = Stdlib.open_in path in
+  Printf.printf "\n Reading %s \n" (green_text path);
+  process current_process;
+  Stdlib.close_in current_process
+
 let main () =
   (* Vérifie que l'expression régulière est bien présente en premier
      argument. Sinon, on affiche un message indiquant comment utiliser
      ce programme et on quitte avec un code d'erreur de `1`. *)
   let argc = Array.length Sys.argv in
-  if argc < 2 || argc > 3 then begin
+  if argc < 2 || argc > 4 then begin
     Printf.printf "usage : %s regex [file]\n%!" Sys.argv.(0);
     exit 1
   end;
-(* S'il y a un deuxième argument c'est qu'il faut lire dans ce
+  let file_arg, compiled, recursive = Lib.Os.process_args argc in
+  if compiled && recursive then Printf.printf "Compiled and recurs";
+  (* S'il y a un deuxième argument c'est qu'il faut lire dans ce
    fichier, sinon, on utilise l'entrée standard. *)
    let input, folder =
     if argc = 3 then
       begin
-        if Sys.is_directory Sys.argv.(2) then
-          Sys.readdir Sys.argv.(2), Sys.argv.(2)
+        if Sys.is_directory file_arg then
+          Sys.readdir file_arg, file_arg
         else
-          [| Sys.argv.(2) |], "."
+          [| file_arg |], "."
       end
     else
       [||], "."
@@ -59,10 +67,7 @@ let main () =
     begin
       for i = 0 to (Array.length input) - 1 do
         let path = Lib.Os.path_join folder  input.(i) in
-        let current_process = Stdlib.open_in path in
-        Printf.printf "\n Reading %s \n" (green_text path);
-        process current_process;
-        Stdlib.close_in current_process;
+        process_file path
       done
     end
   else

@@ -5,7 +5,7 @@
 (generate_opam_files true)
 
 (source
- (github osakah-py/-construction-de-glushkov))
+ (github osakah-py/construction-de-glushkov))
 
 (authors "Daniel Luo, Anna Merle, Alexandre Lescot")
 

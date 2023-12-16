@@ -6,9 +6,9 @@ maintainer: ["Daniel Luo, Anna Merle, Alexandre Lescot"]
 authors: ["Daniel Luo, Anna Merle, Alexandre Lescot"]
 license: "Apache License 2.0"
 tags: ["grep" "glushkov construction" "regex" "project"]
-homepage: "https://github.com/osakah-py/-construction-de-glushkov"
+homepage: "https://github.com/osakah-py/construction-de-glushkov"
 doc: "https://url/to/documentation"
-bug-reports: "https://github.com/osakah-py/-construction-de-glushkov/issues"
+bug-reports: "https://github.com/osakah-py/construction-de-glushkov/issues"
 depends: [
   "ocaml"
   "dune" {>= "3.4"}
@@ -28,4 +28,4 @@ build: [
     "@doc" {with-doc}
   ]
 ]
-dev-repo: "git+https://github.com/osakah-py/-construction-de-glushkov.git"
+dev-repo: "git+https://github.com/osakah-py/construction-de-glushkov.git"
