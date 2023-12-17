@@ -10,11 +10,22 @@ let prefixe : regex -> int list
 let suffixe : regex -> int list
 *)
 
-(* VARIABLES GLOBALES ---------------------------------- *)
-let phi = ref (Array.make 0 0);;
-
 
 (* FONCTIONS ------------------------------------------ *)
+
+
+let lineariser reg =
+  let phi = Hashtbl.create 20 in
+  let i =ref 0 in
+  let rec aux reg = match reg with
+    |Eps -> Eps
+    |Var x -> Hashtbl.add phi !i x;
+              i:= !i + 1;
+              Var !i
+    |Ou(x,y) -> Ou(aux x , aux y )
+    |Et(x,y) -> Et(aux x , aux y )
+    |Etoile x-> Etoile( aux x )
+  in ((aux reg), phi);;
 
 let hashtbl_to_list tab =
   let res = ref [] in
@@ -89,5 +100,6 @@ let deter_langage_local reg =
       deter_facteur fact1 pref1 suff1  
     )
   in 
+
   let a_eps, fact, pref, suff = parcours_reg reg in
   (a_eps, hashtbl_to_list fact, hashtbl_to_list pref, hashtbl_to_list suff);;
