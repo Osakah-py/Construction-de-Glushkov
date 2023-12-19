@@ -95,7 +95,7 @@ let deter_langage_local reg =
       true, 
       pref1,
       suff1,
-      deter_facteur fact1 pref1 suff1  
+      deter_facteur fact1 suff1 pref1  
     )
   in 
 
