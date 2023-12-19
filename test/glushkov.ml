@@ -3,6 +3,8 @@ BONJOUR
 aaaaaaaaaaaaaaaaa
 aabaabaab
 aaababa
-aaaaabba   
-aaaaaaaha
+aaaaabba
+bbbabbbbbba
+aabbbbba
+bc   
 *)

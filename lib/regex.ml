@@ -46,7 +46,7 @@ let deter_suffixe a_eps2 suff1 suff2 =
   if a_eps2 then fusion_hashtbl suff2 suff1 
   else suff2;;
 
-let deter_facteur fact pref suff =  
+let deter_facteur fact suff pref =  
   Hashtbl.iter 
   (fun x _ ->
     Hashtbl.iter
@@ -67,9 +67,10 @@ let deter_langage_local reg =
   match reg with
   | Eps -> (true, Hashtbl.create 0, Hashtbl.create 0, Hashtbl.create 0)
   | Var a ->   
-    let a_tab = Hashtbl.create 1 in 
-    Hashtbl.add a_tab a a;
-    (false, a_tab, a_tab, Hashtbl.create 0)
+    let a_tab_pref, a_tab_suff = Hashtbl.create 1, Hashtbl.create 1 in 
+    Hashtbl.add a_tab_pref a a;
+    Hashtbl.add a_tab_suff a a;
+    (false, a_tab_pref, a_tab_suff, Hashtbl.create 0)
   | Et (reg1, reg2) -> 
     let a_eps1, pref1, suff1, fact1 = parcours_reg reg1 in
     let a_eps2, pref2, suff2, fact2 = parcours_reg reg2 in
@@ -77,7 +78,7 @@ let deter_langage_local reg =
       a_eps1 && a_eps2, 
       deter_prefixe a_eps1 pref1 pref2,
       deter_suffixe a_eps2 suff1 suff2,
-      deter_facteur (fusion_hashtbl fact1 fact2) pref2 suff1  
+      deter_facteur (fusion_hashtbl fact1 fact2) suff1 pref2  
     )
   | Ou (reg1, reg2) ->
     let a_eps1, pref1, suff1, fact1 = parcours_reg reg1 in
