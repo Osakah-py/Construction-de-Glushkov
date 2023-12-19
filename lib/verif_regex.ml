@@ -48,4 +48,4 @@ let str_en_regex (str: string) =
   done;
   match !pile with
   | [a] -> if not !mult_concat then a else raise (InvalidRegex "Pensez a bien fermer les paranthèses !")
-  | _ -> raise (InvalidRegex "Regex pas complète (il manque probablement des opérateurs)")
+  | _ -> raise (InvalidRegex "Regex pas complète \n \t(il manque probablement des opérateurs)")

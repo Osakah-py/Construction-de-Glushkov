@@ -91,7 +91,7 @@ git push origin
 
 ## Syntaxe des regex
 - ```.``` : une lettre quelconque de l’alphabet
-- ```@``` : concaténation
+- ```@``` : concaténation, notez que `(flop)` est équivalent a `fl@o@p@` pour faciliter l'ecriture.
 - ```|``` : alternative
 - ```*``` : étoile de Kleene (zéro, une ou plusieurs fois)
 - ```?``` : optionel (zéro ou une fois) 
