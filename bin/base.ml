@@ -46,7 +46,7 @@ let process_file input =
 let rec process_folder input folder recursiv =  
 for i = 0 to (Array.length input) - 1 do
   let path = Lib.Os.path_join folder  input.(i) in
-  Printf.printf "\n Reading %s \n" (Lib.Os.green_text path);
+  Printf.printf "\n* Reading %s \n" (Lib.Os.green_text path);
   if Sys.is_directory path then
     if recursiv then process_folder (Sys.readdir path) path recursiv
     else Printf.printf "C'est un dossier pour le lire aussi ajouter l'option -r\n"

@@ -17,11 +17,17 @@ let path_join base_path sub_path =
     base_path ^ (String.make 1 path_separator) ^ sub_path
 ;;
 
-(* Verifie si il y a des arguments -rc  et renvoie regex, nom du fichier, compilé?, recursif? *)
+let format_dossier_caml str =
+  let size = String.length str in
+  if str.[size - 1] = '/' || str.[size - 1] = '\\' then String.sub str 0 (size - 1)
+  else str 
+
+(* Verifie si il y a des arguments -rc  et renvoie le quadruplet 
+                      regex, nom du fichier, compilé?, recursif? *)
 
 let process_args argc argv =
   if argc = 3 then 
-    argv.(1), argv.(2), false, false
+    argv.(1), format_dossier_caml argv.(2), false, false
   else 
     begin
       if argv.(1).[0] = '-' then
@@ -34,7 +40,7 @@ let process_args argc argv =
         done;
         if argc = 4 then (
           Printf.printf "%s args \n" argv.(2);
-        argv.(2), argv.(3), !compiled, !recursive)
+        argv.(2), format_dossier_caml argv.(3), !compiled, !recursive)
         else  (Printf.printf "%d euh args \n" argc;
           argv.(2), "___stdin___", !compiled, !recursive)
       else 
