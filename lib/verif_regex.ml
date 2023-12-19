@@ -18,7 +18,7 @@ let union (pile : regex list) = match pile with
 let inter (pile : regex list) = match pile with 
   |[] -> raise (InvalidRegex "Intersection vide")
   |[_] -> raise (InvalidRegex "Intersection a un seul élément")
-  |a::b::t -> Et(a, b)::t
+  |a::b::t -> Et(b, a)::t
 
 let kleene (pile : regex list) = match pile with 
   |[] -> raise (InvalidRegex "Kleene tout nu !")
