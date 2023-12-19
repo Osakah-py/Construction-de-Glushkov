@@ -26,7 +26,7 @@ with InvalidRegex err -> Printf.printf "Erreur dans la regex : %s" (Lib.Os.red_t
 (* Ã modifier : ce que l'on fait pour chaque ligne. En l'état, on
    affiche toujours la ligne. *)
 let process_line line nb =
-  if str_dans_anfd line afnd_test_wikipedia !compiled then begin
+  if str_dans_anfd line !afnd_a_verif !compiled then begin
     Printf.printf "%s %s :" (Lib.Os.red_text "Line ") (Lib.Os.red_text (string_of_int nb)); 
     Printf.printf "%s\n%!" line
   end
