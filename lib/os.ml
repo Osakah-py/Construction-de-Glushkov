@@ -26,7 +26,6 @@ let format_dossier_caml str =
                       regex, nom du fichier, compilé?, recursif? *)
 
 let process_args argc argv =
-  Printf.printf "argc = %d" argc;
   if argc = 3 then 
     argv.(1), format_dossier_caml argv.(2), false, false
   else 

@@ -14,7 +14,7 @@ let afnd_test_wikipedia = {
   terminaux = [|true; true; false; true; false; true|];
   transition_nd = [| [(Char.code 'a', 1); (Char.code 'b', 4)]; [(Char.code 'a', 1); (Char.code 'a', 2)]; [(Char.code 'b', 3)]; [(Char.code 'a', 1); (Char.code 'a', 2)]; [(Char.code 'a', 5)];[(Char.code 'b', 4)]|]
 }
-
+ 
 let emptyafnd = {
   nb_etats = 0;
   initial = 0;

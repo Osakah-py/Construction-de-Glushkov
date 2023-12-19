@@ -1,5 +1,5 @@
 open Type;; 
-(*open Regex;;*)
+open Regex;;
 
 
 let creer_terminaux 

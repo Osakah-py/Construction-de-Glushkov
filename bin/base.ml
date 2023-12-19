@@ -33,7 +33,7 @@ let process_line line nb =
 
 (* Lecture de l'entrÃ©e, ligne par ligne *)
 let process_file input =
-  let i = ref 0 in
+  let i = ref 1 in
   try
     while true do
       let line = Stdlib.input_line input in
@@ -63,6 +63,8 @@ let main () =
      ce programme et on quitte avec un code d'erreur de `1`. *)
   let argc = Array.length Sys.argv in
   if argc < 2 || argc > 4 then begin
+    Printf.printf "argc = %d \n" argc;
+    for i = 0 to argc -1 do Printf.printf "%d:%s \n " i Sys.argv.(i) done;
     Printf.printf "usage : %s regex [file]\n%!" Sys.argv.(0);
     exit 1
   end;
