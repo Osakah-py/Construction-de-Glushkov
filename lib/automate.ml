@@ -1,5 +1,6 @@
 open Type;; 
-open Regex;;
+(*open Regex;;*)
+
 
 let creer_terminaux 
   (n: int) (a_eps: bool) (suff: int list) =
@@ -20,7 +21,7 @@ let creer_transitions
       res.(n - 1) <- (Hashtbl.find phi x, x)::res.(n - 1))
     pref;
   List.iter 
-    (fun (x, y) -> res.(x) <- (Hashtbl.find phi x, y)::res.(x))
+    (fun (x, y) -> res.(x) <- (Hashtbl.find phi y, y)::res.(x))
     fact;
   res;;
 
