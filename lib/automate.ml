@@ -1,4 +1,5 @@
 open Type;; 
+open Regex;;
 
 let creer_terminaux 
   (n: int) (a_eps: bool) (suff: int list) =
@@ -11,20 +12,20 @@ let creer_terminaux
 
 (* creer la matrice de transition pour l'automate local *)
 let creer_transitions
-  (n: int) (pref: int list) (fact: facteur list) (dict: int array)=
+  (n: int) (pref: int list) (fact: facteur list) (dict: (int, int) Hashtbl.t) =
   (* n <- epsilon *)
   let res = Array.make (n + 1) [] in
   List.iter
-    (fun x -> res.(n) <- (dict.(x), x)::res.(n))
+    (fun x -> res.(n) <- (Hashtbl.find dict x, x)::res.(n))
     pref;
   List.iter 
-    (fun (x, y) -> res.(x) <- (dict.(x), y)::res.(x))
+    (fun (x, y) -> res.(x) <- (Hashtbl.find dict x, y)::res.(x))
     fact;
   res;;
 
 let creer_automate_local 
   (* dict a pour clé l'étiquette *)
-  (n: int) (a_eps: bool) (pref: int list) (suff: int list) (fact: facteur list) (dict: int array) = 
+  (n: int) (a_eps: bool) (pref: int list) (suff: int list) (fact: facteur list) (dict: (int, int) Hashtbl.t) = 
   {
     nb_etats = n + 1; (* epsilon en plus *)
     initial = n; (* epsilon *)
@@ -34,17 +35,6 @@ let creer_automate_local
 
 
 let regex_en_automate regex = 
-  if not (regex = Eps) then
-  {
-  nb_etats = 6;
-  initial = 0;
-  terminaux = [|true; true; false; true; false; true|];
-  transition_nd = [| [(Char.code 'a', 1); (Char.code 'b', 4)]; [(Char.code 'a', 1); (Char.code 'a', 2)]; [(Char.code 'b', 3)]; [(Char.code 'a', 1); (Char.code 'a', 2)]; [(Char.code 'a', 5)];[(Char.code 'b', 4)]|]
-}
-  else 
-    {
-      nb_etats = 6;
-      initial = 0;
-      terminaux = [|true; true; false; true; false; true|];
-      transition_nd = [| [(Char.code 'a', 1); (Char.code 'b', 4)]; [(Char.code 'a', 1); (Char.code 'a', 2)]; [(Char.code 'b', 3)]; [(Char.code 'a', 1); (Char.code 'a', 2)]; [(Char.code 'a', 5)];[(Char.code 'b', 4)]|]
-    };;
+  let regex_lin, phi = lineariser regex in
+  let a_eps, pref, suff, fact = deter_langage_local regex_lin in
+  creer_automate_local (Hashtbl.length phi) a_eps pref suff fact phi;;
