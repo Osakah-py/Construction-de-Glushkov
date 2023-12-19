@@ -3,29 +3,26 @@ open Type;;
 (*
 Entrée : une expression
 But : linéariser le regex en se souvenant de l'étiquet
-let lineariser : regex -> regex
-
-let facteur : regex -> facteur list  
-let prefixe : regex -> int list
-let suffixe : regex -> int list
+let lineariser : regex -> regex * ((int, int) Hashtbl.t)
 *)
 
 
 (* FONCTIONS ------------------------------------------ *)
 
-
 let lineariser reg =
   let phi = Hashtbl.create 20 in
-  let i =ref 0 in
+  let i = ref 0 in
   let rec aux reg = match reg with
     |Eps -> Eps
     |Var x -> Hashtbl.add phi !i x;
               i:= !i + 1;
-              Var !i
+              Var (!i - 1)
     |Ou(x,y) -> Ou(aux x , aux y )
     |Et(x,y) -> Et(aux x , aux y )
     |Etoile x-> Etoile( aux x )
   in ((aux reg), phi);;
+
+
 
 let hashtbl_to_list tab =
   let res = ref [] in

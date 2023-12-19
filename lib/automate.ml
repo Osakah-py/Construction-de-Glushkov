@@ -12,25 +12,26 @@ let creer_terminaux
 
 (* creer la matrice de transition pour l'automate local *)
 let creer_transitions
-  (n: int) (pref: int list) (fact: facteur list) (dict: (int, int) Hashtbl.t) =
+  (n: int) (pref: int list) (fact: facteur list) (phi: (int, int) Hashtbl.t) =
   (* n <- epsilon *)
-  let res = Array.make (n + 1) [] in
+  let res = Array.make n [] in
   List.iter
-    (fun x -> res.(n) <- (Hashtbl.find dict x, x)::res.(n))
+    (fun x -> 
+      res.(n - 1) <- (Hashtbl.find phi x, x)::res.(n - 1))
     pref;
   List.iter 
-    (fun (x, y) -> res.(x) <- (Hashtbl.find dict x, y)::res.(x))
+    (fun (x, y) -> res.(x) <- (Hashtbl.find phi x, y)::res.(x))
     fact;
   res;;
 
 let creer_automate_local 
-  (* dict a pour clé l'étiquette *)
-  (n: int) (a_eps: bool) (pref: int list) (suff: int list) (fact: facteur list) (dict: (int, int) Hashtbl.t) = 
+  (* phi a pour clé l'étiquette *)
+  (n: int) (a_eps: bool) (pref: int list) (suff: int list) (fact: facteur list) (phi: (int, int) Hashtbl.t) = 
   {
     nb_etats = n + 1; (* epsilon en plus *)
     initial = n; (* epsilon *)
     terminaux = creer_terminaux (n + 1) a_eps suff;
-    transition_nd = creer_transitions n pref fact dict
+    transition_nd = creer_transitions (n + 1) pref fact phi
   };;
 
 
