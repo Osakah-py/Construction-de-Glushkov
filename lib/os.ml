@@ -1,3 +1,8 @@
+(* ANSI ESCAPE *)
+let red_text s = "\027[31m" ^ s ^ "\027[0m";;
+let green_text s = "\027[32m" ^ s ^ "\027[0m";;
+
+(* Gestion des fichiers *)
 let path_separator =
   if Sys.os_type = "Win32" || Sys.os_type = "Cygwin" then
     '\\'
@@ -28,7 +33,7 @@ let process_args argc argv =
           | a -> Printf.printf "argument %c non reconnu et donc ignoré \n" a
         done;
         if argc = 4 then (
-          Printf.printf "razraz args \n";
+          Printf.printf "%s args \n" argv.(2);
         argv.(2), argv.(3), !compiled, !recursive)
         else  (Printf.printf "%d euh args \n" argc;
           argv.(2), "___stdin___", !compiled, !recursive)

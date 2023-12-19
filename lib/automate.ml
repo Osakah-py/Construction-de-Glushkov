@@ -31,3 +31,20 @@ let creer_automate_local
     terminaux = creer_terminaux (n + 1) a_eps suff;
     transition_nd = creer_transitions n pref fact dict
   };;
+
+
+let regex_en_automate regex = 
+  if not (regex = Eps) then
+  {
+  nb_etats = 6;
+  initial = 0;
+  terminaux = [|true; true; false; true; false; true|];
+  transition_nd = [| [(Char.code 'a', 1); (Char.code 'b', 4)]; [(Char.code 'a', 1); (Char.code 'a', 2)]; [(Char.code 'b', 3)]; [(Char.code 'a', 1); (Char.code 'a', 2)]; [(Char.code 'a', 5)];[(Char.code 'b', 4)]|]
+}
+  else 
+    {
+      nb_etats = 6;
+      initial = 0;
+      terminaux = [|true; true; false; true; false; true|];
+      transition_nd = [| [(Char.code 'a', 1); (Char.code 'b', 4)]; [(Char.code 'a', 1); (Char.code 'a', 2)]; [(Char.code 'b', 3)]; [(Char.code 'a', 1); (Char.code 'a', 2)]; [(Char.code 'a', 5)];[(Char.code 'b', 4)]|]
+    };;
