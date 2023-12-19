@@ -26,6 +26,7 @@ let format_dossier_caml str =
                       regex, nom du fichier, compilé?, recursif? *)
 
 let process_args argc argv =
+  Printf.printf "argc = %d" argc;
   if argc = 3 then 
     argv.(1), format_dossier_caml argv.(2), false, false
   else 
@@ -44,5 +45,7 @@ let process_args argc argv =
         else  (Printf.printf "%d euh args \n" argc;
           argv.(2), "___stdin___", !compiled, !recursive)
       else 
-        exit 1
+        if argc = 2 then
+          argv.(1), "___stdin___", false, false
+      else exit 1
     end

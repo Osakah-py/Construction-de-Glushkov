@@ -69,6 +69,7 @@ let main () =
   let reg_arg, file_arg, comp, recursive = Lib.Os.process_args argc Sys.argv in
   if comp then compiled := true;
   initialisation reg_arg;
+  Printf.printf "le file : %s" file_arg;
   (* S'il y a un deuxième argument c'est qu'il faut lire dans ce
    fichier, sinon, on utilise l'entrée standard. *)
    let input, folder =
@@ -84,9 +85,9 @@ let main () =
     reg_arg
     (Lib.Os.green_text file_arg);
   
-  if file_arg = "___stdin___" then process_file Stdlib.stdin
+  if file_arg = "___stdin___" then (Printf.printf "stdin"; process_file Stdlib.stdin)
   else
     process_folder input folder recursive
   
 
-let () = Printf.printf "ca compile ! \n" ; ignore (str_en_regex "ab|"); main ()
+let () = Printf.printf "ca compile ! \n" ; main ()
