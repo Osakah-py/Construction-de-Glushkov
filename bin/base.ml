@@ -71,7 +71,6 @@ let main () =
   let reg_arg, file_arg, comp, recursive = Lib.Os.process_args argc Sys.argv in
   if comp then compiled := true;
   initialisation reg_arg;
-  Printf.printf "le file : %s" file_arg;
   (* S'il y a un deuxième argument c'est qu'il faut lire dans ce
    fichier, sinon, on utilise l'entrée standard. *)
    let input, folder =
