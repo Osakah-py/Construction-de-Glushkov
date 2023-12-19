@@ -85,7 +85,7 @@ let main () =
     reg_arg
     (Lib.Os.green_text file_arg);
   
-  if file_arg = "___stdin___" then (Printf.printf "stdin"; process_file Stdlib.stdin)
+  if file_arg = "___stdin___" then process_file Stdlib.stdin
   else
     process_folder input folder recursive
   

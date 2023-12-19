@@ -32,7 +32,7 @@ let parcours_direct (str: string) (automate : afnd) =
       parcours_vosins i automate.transition_nd.(curr_state)
   and parcours_vosins (i:int) (voisins : (int * int) list) = match voisins with
   | [] -> false
-  | (a, state)::q -> if a = Char.code (str.[i]) then 
+  | (a, state)::q -> if a = Char.code (str.[i]) || a = Char.code '.' then 
                         changement_etat (i+1) (state) || (parcours_vosins i q)
                       else 
                         (parcours_vosins i q)
