@@ -1,4 +1,4 @@
-open Type
+open Type;;
 
 (* Syntaxe des regex :
       . : une lettre quelconque de l’alphabet
@@ -30,14 +30,22 @@ let un_ou_rien (pile : regex list) = match pile with
 
 let str_en_regex (str: string) = 
   let pile = ref [] in
+  let mult_concat = ref false in
+  let mult_concat_ind = ref 0 in
   for i=0 to (String.length str) - 1 do
     match str.[i] with
     | '|' -> pile := union !pile
     | '@' -> pile := inter !pile
     | '*' -> pile := kleene !pile
     | '?' -> pile := un_ou_rien !pile
-    |  c  -> pile := Var(Char.code c)::!pile
+    | '(' -> mult_concat := true
+    | ')' -> mult_concat := false; mult_concat_ind := 0
+    |  c  -> pile := Var(Char.code c)::!pile; 
+              if !mult_concat && !mult_concat_ind > 0 then 
+                pile := inter !pile 
+              else if !mult_concat then 
+                mult_concat_ind := 1
   done;
   match !pile with
-  | [a] -> a
-  | _ -> raise (InvalidRegex "Regex pas complète")
+  | [a] -> if not !mult_concat then a else raise (InvalidRegex "Pensez a bien fermer les paranthèses !")
+  | _ -> raise (InvalidRegex "Regex pas complète (il manque probablement des opérateurs)")
