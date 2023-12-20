@@ -1,6 +1,18 @@
 open Type;; 
 open Regex;;
 
+let emptyafnd = {
+  nb_etats = 0;
+  initial = 0;
+  terminaux = [||];
+  transition_nd = [||]
+};;
+let emptyafd = {
+  nb_etats = 0;
+  initial = 0;
+  terminaux = [||];
+  transition_nd = [||]
+};;
 
 let creer_terminaux 
   (n: int) (a_eps: bool) (suff: int list) =

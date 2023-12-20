@@ -1,6 +1,5 @@
 open Lib.Verif_regex
 open Lib.Verif_word
-open Lib.Type
 (*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*)
 (* Nicolas PÃ©cheux <info.cpge@cpge.info>                            *)
 (* http://cpge.info                                                 *)
@@ -9,29 +8,28 @@ open Lib.Type
 
 (* GLOBAL VAR *)
 let compiled = ref false;;
-let afnd_a_verif = ref {
-  nb_etats = 0;
-  initial = 0;
-  terminaux = [||];
-  transition_nd = [||]
-};;
+let afnd_a_verif = ref Lib.Automate.emptyafnd;;
+(*let afd_a_verif = ref Lib.Automate.emptyafd;;*)
+let total_match = ref 0;;
+let total_files = ref 0;;
 
+
+(* Initialisation = creation de l'automate *)
 let initialisation str_reg = 
   try let regex = str_en_regex str_reg in 
   afnd_a_verif := Lib.Automate.regex_en_automate regex
 with InvalidRegex err -> Printf.printf "Erreur dans la regex : %s" (Lib.Os.red_text err); exit 1
 
 
-
-(* Ã modifier : ce que l'on fait pour chaque ligne. En l'état, on
-   affiche toujours la ligne. *)
+(* On affiche la ligne ssi elle match la regex *)
 let process_line line nb =
   if str_dans_anfd line !afnd_a_verif !compiled then begin
+    incr total_match;
     Printf.printf "%s %s :" (Lib.Os.red_text "Line ") (Lib.Os.red_text (string_of_int nb)); 
     Printf.printf "%s\n%!" line
   end
 
-(* Lecture de l'entrÃ©e, ligne par ligne *)
+(* on traite chaque ligne indépendament *)
 let process_file input =
   let i = ref 1 in
   try
@@ -42,18 +40,19 @@ let process_file input =
     done; 
   with End_of_file -> ()
 
-
+(* Ici si on tombe sur un fichier on le traite si on tombe sur un dossier on traite le dossier si -r est donné en entrée *)
 let rec process_folder input folder recursiv =  
 for i = 0 to (Array.length input) - 1 do
   let path = Lib.Os.path_join folder  input.(i) in
-  Printf.printf "\n* Reading %s \n" (Lib.Os.green_text path);
   if Sys.is_directory path then
     if recursiv then process_folder (Sys.readdir path) path recursiv
     else Printf.printf "C'est un dossier pour le lire aussi ajouter l'option -r\n"
   else begin 
+        Printf.printf "\n* Reading %s \n" (Lib.Os.green_text path);
         let current_process = Stdlib.open_in path in
         process_file current_process;
-        Stdlib.close_in current_process
+        Stdlib.close_in current_process;
+        incr total_files;
         end
 done
 
@@ -68,6 +67,7 @@ let main () =
     Printf.printf "usage : %s regex [file]\n%!" Sys.argv.(0);
     exit 1
   end;
+  (* Ici on récupères les arguments entrés avec les options *)
   let reg_arg, file_arg, comp, recursive = Lib.Os.process_args argc Sys.argv in
   if comp then compiled := true;
   initialisation reg_arg;
@@ -91,4 +91,4 @@ let main () =
     process_folder input folder recursive
   
 
-let () = Printf.printf "ca compile ! \n" ; main ()
+let () = main (); Printf.printf "\n\t %d files analysed. %s \n" !total_files (Lib.Os.green_text @@ (string_of_int !total_match) ^ " lines matching.")
