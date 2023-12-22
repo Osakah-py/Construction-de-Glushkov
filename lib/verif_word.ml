@@ -32,7 +32,7 @@ let parcours_direct (str: string) (automate : afnd) =
       parcours_vosins i automate.transition_nd.(curr_state)
   and parcours_vosins (i:int) (voisins : (int * int) list) = match voisins with
   | [] -> false
-  | (a, state)::q -> if a = Char.code (str.[i]) || a = Char.code '.' then
+  | (a, state)::q -> if a = Char.code (str.[i]) || a = Char.code '.' then 
                         changement_etat (i+1) (state) || (parcours_vosins i q)
                       else
                         (parcours_vosins i q)
@@ -47,13 +47,26 @@ let meta_terminal (meta_state : bool array) (auto : afnd) =
   done; false
   with Break -> true
 
-let parcours_direct_2 (str :string) (automate :afnd) = 
+let meta_next (prev : bool array) (carac : int) (automate : afnd) = 
+  let next = Array.make automate.nb_etats false in
+  let length = Array.length prev in
+  for i = 0 to length do
+    if prev.(i) then 
+      let rec aux = function
+      | (c, state) when c = carac -> next.(i) <- true
+      | _ -> ()
+    in aux automate.transition_nd.(i);
+  done
+
+let determinisation (automate :afnd) = 
   let str_len = String.length str in 
   let curr_meta_state = Array.make automate.nb_etats false in
   let rec changement_etat (i:int) = 
     if i = lgt then 
       meta_terminal curr_meta_state automate
-  else
+    else 
+      meta_next curr_meta_state (Char.code 'a') automate
+
 
 (* Deterministation *)
 (**********************)
