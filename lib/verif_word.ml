@@ -15,12 +15,12 @@ let afnd_test_wikipedia = {
   transition_nd = [| [(Char.code 'a', 1); (Char.code 'b', 4)]; [(Char.code 'a', 1); (Char.code 'a', 2)]; [(Char.code 'b', 3)]; [(Char.code 'a', 1); (Char.code 'a', 2)]; [(Char.code 'a', 5)];[(Char.code 'b', 4)]|]
 }
  
-let emptyafnd = {
+(*let emptyafnd = {
   nb_etats = 0;
   initial = 0;
   terminaux = [||];
   transition_d = [||]
-}
+}*)
 (* Parcours en Direct *)
 (**********************)
 let parcours_direct (str: string) (automate : afnd) =
@@ -41,11 +41,11 @@ let parcours_direct (str: string) (automate : afnd) =
 exception Break
 let meta_terminal (meta_state : bool array) (auto : afnd) =
   let length = Array.length meta_state in
-  try for i = 0 to length do
-    if meta_state.(i) then 
+  try for i = 0 to (length-1) do
+    if meta_state.(i) && auto.terminaux.(i) then
       raise Break
   done; false
-  with Break -> true
+  with Break -> true;;
 
 let meta_next (prev : bool array) (carac : int) (automate : afnd) = 
   let next = Array.make automate.nb_etats false in
@@ -61,34 +61,38 @@ let meta_next (prev : bool array) (carac : int) (automate : afnd) =
 
 let determinisation (automate :afnd) = 
   let str_len = String.length str in 
-  let curr_meta_state = Array.make automate.nb_etats false in
-  let rec changement_etat (i:int) = 
-    if i = lgt then 
-      meta_terminal curr_meta_state automate
-    else 
-      meta_next curr_meta_state (Char.code 'a') automate
 
 
 (* Deterministation *)
 (**********************)
 let parcours_autpart (u :string) (aut : afnd) =
   let nb_etats = aut.nb_etats in
-  let n = String.length u in
-  let q0 = aut.initial in
-  let t1 = ref Array.make nb_etats false in
-  let t2 = Array.make nb_etats false in
-  t.(q0) <- true;
-  for i = 0 to (n-1) do
-    for j = 0 to nb_etats do
-      if t1.(j) 
+  let n = String.length u in (*nb de caractères*)
+  let q0 = aut.initial in (*etat initial*)
+  let t = Array.make_matrix 2 nb_etats false in (* 2 tableaux de meta etats*)
+  t.(0).(q0) <- true;
+  for i = 0 to (n-1) do (*caractères*)
+   for k=0 to (nb_etats-1) do
+        t.(1 - (i mod 2)).(k) <-false
+      done;
+    for j = 0 to (nb_etats-1) do (*etats*)
+      if t.(i mod 2).(j) then(
+        let trans = aut.transition_nd in
+        let rec aux lst char_int  = match lst with
+            |[]-> ()
+            |(l,e)::q-> if l = char_int then  t.( 1 - (i mod 2)).(e) <- true;
+                         aux q char_int
+         in aux (trans.(j)) ( Char.code (u.[i])))
+      done;
+    done;
+  meta_terminal (t.(n mod 2)) aut;;
 
-let determinisation (automate_nd :afnd) =
+(*let determinisation (automate_nd :afnd) =
 
-    Printf.printf "Soon"
-
-
+    Printf.printf "Soon";;*)
 (* GENERAL *)
 (**********************)
 let str_dans_anfd (str: string) (automate : afnd) (compiled : bool) =
-  if not compiled then parcours_direct str automate
-  else parcours_determinise str emptyafnd
+  if not compiled then parcours_autpart str automate
+  else parcours_direct str automate
+
