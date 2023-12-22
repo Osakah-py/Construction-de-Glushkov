@@ -32,7 +32,7 @@ let parcours_direct (str: string) (automate : afnd) =
       parcours_vosins i automate.transition_nd.(curr_state)
   and parcours_vosins (i:int) (voisins : (int * int) list) = match voisins with
   | [] -> false
-  | (a, state)::q -> if a = Char.code (str.[i]) || a = Char.code '.' then 
+  | (a, state)::q -> if a = Char.code (str.[i]) || a = Char.code '.' then
                         changement_etat (i+1) (state) || (parcours_vosins i q)
                       else
                         (parcours_vosins i q)
@@ -57,11 +57,16 @@ let parcours_direct_2 (str :string) (automate :afnd) =
 
 (* Deterministation *)
 (**********************)
-let parcours_autpart (str :string) (aut : afnd) =
+let parcours_autpart (u :string) (aut : afnd) =
   let nb_etats = aut.nb_etats in
-  
-
-
+  let n = String.length u in
+  let q0 = aut.initial in
+  let t1 = ref Array.make nb_etats false in
+  let t2 = Array.make nb_etats false in
+  t.(q0) <- true;
+  for i = 0 to (n-1) do
+    for j = 0 to nb_etats do
+      if t1.(j) 
 
 let determinisation (automate_nd :afnd) =
 
