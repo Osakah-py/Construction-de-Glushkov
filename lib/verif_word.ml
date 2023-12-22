@@ -56,7 +56,8 @@ let meta_next (prev : bool array) (carac : int) (automate : afnd) =
       | (c, state) when c = carac -> next.(i) <- true
       | _ -> ()
     in aux automate.transition_nd.(i);
-  done
+  done;
+  next;;
 
 let determinisation (automate :afnd) = 
   let str_len = String.length str in 
