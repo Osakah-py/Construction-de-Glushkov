@@ -34,18 +34,21 @@ let parcours_direct (str: string) (automate : afnd) =
   | [] -> false
   | (a, state)::q -> if a = Char.code (str.[i]) || a = Char.code '.' then 
                         changement_etat (i+1) (state) || (parcours_vosins i q)
-                      else 
+                      else
                         (parcours_vosins i q)
   in changement_etat 0 automate.initial
 
 (* Deterministation *)
 (**********************)
-let parcours_determinise (str: string) (automate:afd) = 
-  if String.length str = 1 && automate.initial = 0 then print_newline();   (* j'ai mis des random condition pour que ca puisse compiler*)
- true
+let parcours_autpart (str :string) (aut : afnd) =
+  let nb_etats = aut.nb_etats in
+  
 
-  (*let determinisation (str: string) (automate_nd :afnd) = 
-    Printf.printf "Soon"*)
+
+
+let determinisation (automate_nd :afnd) =
+
+    Printf.printf "Soon"
 
 
 (* GENERAL *)
