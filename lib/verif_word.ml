@@ -50,7 +50,7 @@ let meta_terminal (meta_state : bool array) (auto : afnd) =
 let meta_next (prev : bool array) (carac : int) (automate : afnd) = 
   let next = Array.make automate.nb_etats false in
   let length = Array.length prev in
-  for i = 0 to length do
+  for i = 0 to length - 1 do
     if prev.(i) then 
       let rec aux = function
       | (c, state) when c = carac -> next.(i) <- true
@@ -59,8 +59,20 @@ let meta_next (prev : bool array) (carac : int) (automate : afnd) =
   done;
   next;;
 
+let meta_hash (table : bool array) = 
+  let hash = ref 0 in
+  let length = Array.length table in 
+  for i = 0 to length - 1 do
+    if table.(i) then hash := !hash + 1
+    else hash := !hash lsl 1
+  done; !hash
+
 let determinisation (automate :afnd) = 
   let str_len = String.length str in 
+  let curr_meta_state = Array.make automate.nb_etats false in
+  let futur_d = ref [] in
+  futur_d := (meta_next curr_meta_state (Char.code 'a') automate)::!futur_d
+
 
 
 (* Deterministation *)
